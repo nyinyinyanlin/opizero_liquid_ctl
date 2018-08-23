@@ -22,8 +22,8 @@ var offset = 0;
 var mode='auto';
 var runMotor=false;
 */
-var sensorShell = new PythonShell(sense_script);
-var relayShell = new PythonShell(relay_script);
+var sensorShell = new pyshell(sense_script);
+var relayShell = new pyshell(relay_script);
 
 var autoSchedule = null;
 

@@ -10,18 +10,17 @@ def getCmd():
     return lines[0]
 
 def main():
-	gpio.init()
-	gpio.setcfg(port.GPIO3,1)
-	gpio.setcfg(port.GPIO7,1)
-	gpio.output(port.GPIO7,0)
-	gpio.setcfg(port.GPIO7,0)
-
-	while True:
+    gpio.init()
+    gpio.setcfg(port.GPIO3,1)
+    gpio.setcfg(port.GPIO7,1)
+    gpio.output(port.GPIO7,0)
+    gpio.setcfg(port.GPIO7,0)
+    while True:
         cmd = getCmd()
         if(cmd=="sense"):
-    	     n = 0
-           	 distance = 0
-           	 while n < 20:
+            n = 0
+            distance = 0
+            while n < 20:
                 gpio.output(port.GPIO3, 1)
                 sleep(10/1000000.0)
                 gpio.output(port.GPIO3,0)
@@ -36,9 +35,9 @@ def main():
                 distance += ((delta*17150)/1000000.0)
                 n += 1
                 sleep(0.2)
-           	 distance = distance / 20.0
-           	 print(distance)
-    	     sys.stdout.flush()
+                distance = distance / 20.0
+                print(distance)
+                sys.stdout.flush()
 
-if __name__ == '__main__':
-	main()
+                if __name__ == '__main__':
+                    main()
