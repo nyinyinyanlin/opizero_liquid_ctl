@@ -25,7 +25,7 @@ var runMotor=false;
 var autoSchedule = null;
 
 function getLevel(){
-	pyshell.run('sense_script',{},function(err,results){
+	pyshell.run(sense_script,{},function(err,results){
 		if(err) throw err;
 		console.log('results: %j', results);
 	})
