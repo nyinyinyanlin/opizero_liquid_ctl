@@ -53,7 +53,7 @@ relayShell.on('error',function(err){
 	console.log(err);
 });
 */
-var sensorTrigger = schedule.scheduleJob('*/1 * * * *',function()
+var sensorTrigger = schedule.scheduleJob('*/1 * * * *',function(){
 	getLevel();
 	console.log("Sense");
 });
