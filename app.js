@@ -22,11 +22,19 @@ var offset = 0;
 var mode='auto';
 var runMotor=false;
 */
-var sensorShell = new pyshell(sense_script);
-var relayShell = new pyshell(relay_script);
-
 var autoSchedule = null;
 
+function getLevel(){
+	pyshell.run('sense_script',{},function(err,results){
+		if(err) throw err;
+		console.log('results: %j', results);
+	})
+}
+
+function setMotor(control){
+	//pass
+}
+/*
 sensorShell.on('message',function(message){
 	curLevel = parseFloat(message) || settings.setLevel;
 	console.log("Liquid Level (cm): ",curLevel);
@@ -43,9 +51,10 @@ relayShell.on('message',function(message){
 relayShell.on('error',function(err){
 	console.log(err);
 });
-
+*/
 var sensorTrigger = schedule.scheduleJob('*/1 * * * *',function(){
-	sensorShell.send('sense');
+	//sensorShell.send('sense\n');
+	getLevel();
 	console.log("Sense");
 });
 
@@ -127,10 +136,10 @@ app.get('/setmode',function(req,res){
 		settings.mode = 'auto';
 		autoSchedule = schedule.scheduleJob('*/30 * * * * *', function(){
 			if(curLevel < settings.setLevel){
-				relayShell.send(true);
+				//relayShell.send(true);
 				console.log("Level Lower");
 			}else{
-				relayShell.send(false);
+				//relayShell.send(false);
 				console.log("Level Equal");
 			}
 		});
@@ -148,7 +157,7 @@ app.get('/setmotor',function(req,res){
 			console.log(settings.runMotor=false);
 		}
 		console.log("Motor",settings.runMotor);
-		relayShell.send(settings.runMotor);
+	//	relayShell.send(settings.runMotor);
 	}
 	saveSettings(settings);
 	res.send(200);
