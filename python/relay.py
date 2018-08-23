@@ -16,7 +16,7 @@ def main():
 
 	while True:
 	        cmd = getCmd()
-       		print(cmd);
+       		print("From motor",cmd);
         	if(cmd=="true"):
             		gpio.output(port.STATUS_LED,1)
         	else:
