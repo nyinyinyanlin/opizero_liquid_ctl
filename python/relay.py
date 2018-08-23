@@ -12,8 +12,17 @@ def getCmd():
 def main():
 	gpio.init()
 	gpio.setcfg(port.STATUS_LED,1)
-	gpio.output(port.STATUS_LED,0)
-
+	gpio.output(port.STATUS_LED,1)
+    time.sleep(1)
+    gpio.output(port.STATUS_LED,0)
+    time.sleep(0.5)
+    gpio.output(port.STATUS_LED,1)
+    time.sleep(0.5)
+    gpio.output(port.STATUS_LED,0)
+    time.sleep(0.5)
+    gpio.output(port.STATUS_LED,1)
+    time.sleep(0.5)
+    gpio.output(port.STATUS_LED,0)
 	while True:
 	        cmd = getCmd()
        		print("From motor",cmd);
