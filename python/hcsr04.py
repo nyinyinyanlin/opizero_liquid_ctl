@@ -28,8 +28,8 @@ def main():
             distance += ((delta*17150)/1000000.0)
             n += 1
             sleep(0.2)
-            distance = distance / 20.0
-            print(distance)
+    distance = distance / 20.0
+    print(distance)
 
 if __name__ == '__main__':
     main()
