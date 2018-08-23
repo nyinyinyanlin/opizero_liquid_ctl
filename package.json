@@ -1,0 +1,40 @@
+{
+  "name": "opizero_liquid_ctl",
+  "version": "1.0.0",
+  "description": "An Orange Pi Zero based liquid(tank) level control systemwith web dashboard",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nyinyinyanlin/opizero_liquid_ctl.git"
+  },
+  "keywords": [
+    "IoT",
+    "Liquid",
+    "Level",
+    "Control",
+    "Orange",
+    "Pi",
+    "Zero",
+    "Python",
+    "Web",
+    "Dashboard"
+  ],
+  "author": "Nyi Nyi Nyan Lin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nyinyinyanlin/opizero_liquid_ctl/issues"
+  },
+  "homepage": "https://github.com/nyinyinyanlin/opizero_liquid_ctl#readme",
+  "dependencies": {
+    "bootstrap": "^4.1.3",
+    "jquery": "^3.3.1",
+    "node-schedule": "^1.3.0",
+    "path": "^0.12.7",
+    "popper.js": "^1.14.4",
+    "python-shell": "^0.5.0",
+    "request": "^2.88.0"
+  }
+}
