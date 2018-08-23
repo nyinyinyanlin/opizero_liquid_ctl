@@ -15,12 +15,12 @@ def main():
 	gpio.output(port.STATUS_LED,0)
 
 	while True:
-        cmd = getCmd()
-        print(cmd);
-        if(cmd=="true"):
-            gpio.output(port.STATUS_LED,1)
-        else:
-            gpio.output(port.STATUS_LED,0)
+	        cmd = getCmd()
+       		print(cmd);
+        	if(cmd=="true"):
+            		gpio.output(port.STATUS_LED,1)
+        	else:
+            		gpio.output(port.STATUS_LED,0)
 
 if __name__ == '__main__':
 	main()
