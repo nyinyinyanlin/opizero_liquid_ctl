@@ -32,8 +32,16 @@ sensorShell.on('message',function(message){
 	console.log("Liquid Level (cm): ",curLevel);
 });
 
+sensorShell.on('error',function(err){
+	console.log(err);
+});
+
 relayShell.on('message',function(message){
 	console.log(message);
+});
+
+relayShell.on('error',function(err){
+	console.log(err);
 });
 
 var sensorTrigger = schedule.scheduleJob('*/1 * * * *',function(){
