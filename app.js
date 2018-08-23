@@ -22,8 +22,6 @@ var offset = 0;
 var mode='auto';
 var runMotor=false;
 */
-var autoSchedule = null;
-
 function getLevel(){
 	pyshell.run(sense_script,{},function(err,results){
 		if(err) throw err;
@@ -32,7 +30,10 @@ function getLevel(){
 }
 
 function setMotor(control){
-	//pass
+	pyshell.run(relay_script,{arg:[control]},function(err,results){
+		if(err) throw err;
+		console.log('results: %j',results);
+	});
 }
 /*
 sensorShell.on('message',function(message){
@@ -52,8 +53,7 @@ relayShell.on('error',function(err){
 	console.log(err);
 });
 */
-var sensorTrigger = schedule.scheduleJob('*/1 * * * *',function(){
-	//sensorShell.send('sense\n');
+var sensorTrigger = schedule.scheduleJob('*/1 * * * *',function()
 	getLevel();
 	console.log("Sense");
 });
@@ -130,17 +130,17 @@ app.get('/settank',function(req,res){
 app.get('/setmode',function(req,res){
 	if(req.param('mode')=='manual'){
 		settings.mode = 'manual';
-		//relayShell.send(settings.runMotor);
+		setMotor(settings.runMotor);
 		console.log("Mode Manual - ",settings.runMotor);
 	}else{
 		settings.mode = 'auto';
 		autoSchedule = schedule.scheduleJob('*/30 * * * * *', function(){
 			if(curLevel < settings.setLevel){
-				//relayShell.send(true);
-				console.log("Level Lower");
+				setMotor("on");
+				settings.runMotor = "on";
 			}else{
-				//relayShell.send(false);
-				console.log("Level Equal");
+				setMotor("off");
+				settings.runMotor = "off";
 			}
 		});
 	}
@@ -152,12 +152,12 @@ app.get('/setmode',function(req,res){
 app.get('/setmotor',function(req,res){
 	if(settings.mode=='manual'){
 		if(req.param('set')=='on'){
-			console.log(settings.runMotor=true);
+			console.log(settings.runMotor="on");
 		}else if(req.param('set')=='off'){
-			console.log(settings.runMotor=false);
+			console.log(settings.runMotor="off");
 		}
 		console.log("Motor",settings.runMotor);
-	//	relayShell.send(settings.runMotor);
+		setMotor(settings.runMotor);
 	}
 	saveSettings(settings);
 	res.send(200);

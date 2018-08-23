@@ -8,5 +8,5 @@
   "curLevel": 0,
   "offset": 0.5,
   "mode": "auto",
-  "runMotor": false
+  "runMotor": "off"
 }
