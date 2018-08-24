@@ -10,50 +10,22 @@ const port = process.env.PORT || 8000;
 const filename = process.env.SETTINGS || "setting.json";
 const sense_script = process.env.SENSE || "python/hcsr04.py";
 const relay_script = process.env.RELAY_CONTROL || "python/relay.py";
-/*
-var tankType = 'box';
-var tankRadius = 0;
-var tankHeight = 0;
-var tankWidth = 0;
-var tankLength = 0;
-var setLevel = 0;
-var curLevel = 0;
-var offset = 0;
-var mode='auto';
-var runMotor=false;
-*/
+
 function getLevel(){
 	pyshell.run(sense_script,{},function(err,results){
 		if(err) throw err;
-		console.log('results: %j', results);
+		curLevel = parseFloat(results[0])||settings.setLevel;
 	})
 }
 
 function setMotor(control){
-	pyshell.run(relay_script,{arg:[control]},function(err,results){
+	pyshell.run(relay_script,{args:[control]},function(err,results){
 		if(err) throw err;
 		console.log('results: %j',results);
 	});
 }
-/*
-sensorShell.on('message',function(message){
-	curLevel = parseFloat(message) || settings.setLevel;
-	console.log("Liquid Level (cm): ",curLevel);
-});
 
-sensorShell.on('error',function(err){
-	console.log(err);
-});
-
-relayShell.on('message',function(message){
-	console.log(message);
-});
-
-relayShell.on('error',function(err){
-	console.log(err);
-});
-*/
-var sensorTrigger = schedule.scheduleJob('*/1 * * * *',function(){
+var sensorTrigger = schedule.scheduleJob('*/10 * * * * *',function(){
 	getLevel();
 	console.log("Sense");
 });
@@ -62,6 +34,7 @@ console.log("Loading settings.");
 let setting = fs.readFileSync(filename);
 var settings = JSON.parse(setting);
 var curLevel = 0;
+var runMotor = "off";
 console.log("Loading completed.");
 
 function saveSettings(content){
@@ -89,7 +62,7 @@ app.get('/gettank',function(req,res){
 		'threshold' : settings.setLevel,
 		'offset':settings.offset,
 		'mode':settings.mode,
-		'motor':settings.runMotor,
+		'motor':runMotor,
 	}
 	if(settings.tankType=='cylindrical'){
 		tank['radius'] = settings.tankRadius;
@@ -130,17 +103,22 @@ app.get('/settank',function(req,res){
 app.get('/setmode',function(req,res){
 	if(req.param('mode')=='manual'){
 		settings.mode = 'manual';
-		setMotor(settings.runMotor);
-		console.log("Mode Manual - ",settings.runMotor);
+		setMotor(runMotor);
+		console.log("Mode Manual - ",runMotor);
+		if(autoSchedule){
+			autoSchedule.cancel();
+			autoSchedule = null;
+			console.log("Process Terminated");
+		}
 	}else{
 		settings.mode = 'auto';
-		autoSchedule = schedule.scheduleJob('*/30 * * * * *', function(){
-			if(curLevel < settings.setLevel){
+		autoSchedule = schedule.scheduleJob('*/10 * * * * *', function(){
+			if((settings.tankHeight - curLevel) < (settings.setLevel-settings.offset)){
 				setMotor("on");
-				settings.runMotor = "on";
+				runMotor = "on";
 			}else{
 				setMotor("off");
-				settings.runMotor = "off";
+				runMotor = "off";
 			}
 		});
 	}
@@ -152,14 +130,13 @@ app.get('/setmode',function(req,res){
 app.get('/setmotor',function(req,res){
 	if(settings.mode=='manual'){
 		if(req.param('set')=='on'){
-			console.log(settings.runMotor="on");
+			console.log(runMotor="on");
 		}else if(req.param('set')=='off'){
-			console.log(settings.runMotor="off");
+			console.log(runMotor="off");
 		}
-		console.log("Motor",settings.runMotor);
-		setMotor(settings.runMotor);
+		console.log("Motor",runMotor);
+		setMotor(runMotor);
 	}
-	saveSettings(settings);
 	res.send(200);
 });
 
