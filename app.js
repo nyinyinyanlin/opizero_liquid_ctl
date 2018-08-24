@@ -21,6 +21,20 @@ function getLevel(){
 	})
 }
 
+function setAutomode(){
+	autoSchedule = schedule.scheduleJob('*/10 * * * * *', function(){
+		if(settings.setLevel > curLevel){
+			console.log("Motor fill");
+			setMotor("on");
+			runMotor = "on";
+		}else{
+			console.log("Motor stop");
+			setMotor("off");
+			runMotor = "off";
+		}
+	});
+}
+
 function setMotor(control){
 	pyshell.run(relay_script,{args:[control]},function(err,results){
 		if(err) throw err;
@@ -116,17 +130,7 @@ app.get('/setmode',function(req,res){
 		}
 	}else{
 		settings.mode = 'auto';
-		autoSchedule = schedule.scheduleJob('*/10 * * * * *', function(){
-			if(settings.setLevel > curLevel){
-				console.log("Motor fill");
-				setMotor("on");
-				runMotor = "on";
-			}else{
-				console.log("Motor stop");
-				setMotor("off");
-				runMotor = "off";
-			}
-		});
+		setAutomode();
 	}
 	console.log(settings.mode);
 	saveSettings(settings);
@@ -145,5 +149,9 @@ app.get('/setmotor',function(req,res){
 	}
 	res.send(200);
 });
+
+if(settings.mode=="auto"){
+	setAutomode();
+}
 
 app.listen(port);
