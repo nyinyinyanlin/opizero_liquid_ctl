@@ -14,7 +14,10 @@ const relay_script = process.env.RELAY_CONTROL || "python/relay.py";
 function getLevel(){
 	pyshell.run(sense_script,{},function(err,results){
 		if(err) throw err;
-		curLevel = parseFloat(results[0])||settings.setLevel;
+		curLevel = (settings.tankHeight - parseFloat(results[0]))||settings.setLevel;
+		if (curLevel < 0){
+			curLevel = 0;
+		}
 	})
 }
 
@@ -35,6 +38,7 @@ let setting = fs.readFileSync(filename);
 var settings = JSON.parse(setting);
 var curLevel = 0;
 var runMotor = "off";
+var autoSchedule = null;
 console.log("Loading completed.");
 
 function saveSettings(content){
@@ -113,10 +117,12 @@ app.get('/setmode',function(req,res){
 	}else{
 		settings.mode = 'auto';
 		autoSchedule = schedule.scheduleJob('*/10 * * * * *', function(){
-			if((settings.tankHeight - curLevel) < (settings.setLevel-settings.offset)){
+			if(settings.setLevel > curLevel){
+				console.log("Motor fill");
 				setMotor("on");
 				runMotor = "on";
 			}else{
+				console.log("Motor stop");
 				setMotor("off");
 				runMotor = "off";
 			}
