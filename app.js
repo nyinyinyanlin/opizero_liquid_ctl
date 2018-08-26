@@ -23,7 +23,7 @@ function getLevel(){
 
 function setAutomode(){
 	autoSchedule = schedule.scheduleJob('*/10 * * * * *', function(){
-		if(settings.setLevel > curLevel){
+		if(settings.setLevel > (curLevel+settings.offset)){
 			console.log("Motor fill");
 			setMotor("on");
 			runMotor = "on";
@@ -150,6 +150,7 @@ app.get('/setmotor',function(req,res){
 	res.send(200);
 });
 
+setMotor("off");
 if(settings.mode=="auto"){
 	setAutomode();
 }
