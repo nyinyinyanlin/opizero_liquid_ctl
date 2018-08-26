@@ -154,5 +154,4 @@ setMotor("off");
 if(settings.mode=="auto"){
 	setAutomode();
 }
-
 app.listen(port);
