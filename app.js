@@ -10,7 +10,7 @@ const port = process.env.PORT || 8000;
 const filename = process.env.SETTINGS || "setting.json";
 const sense_script = process.env.SENSE || "python/hcsr04.py";
 const relay_script = process.env.RELAY_CONTROL || "python/relay.py";
-/*
+
 function getLevel(){
 	pyshell.run(sense_script,{},function(err,results){
 		if(err) throw err;
@@ -22,7 +22,7 @@ function getLevel(){
 }
 
 function setAutomode(){
-	autoSchedule = schedule.scheduleJob('*//*10 * * * * *', function(){
+	autoSchedule = schedule.scheduleJob('*/10 * * * * *', function(){
 		if(settings.setLevel > curLevel){
 			console.log("Motor fill");
 			setMotor("on");
@@ -42,7 +42,7 @@ function setMotor(control){
 	});
 }
 
-var sensorTrigger = schedule.scheduleJob('*//*10 * * * * *',function(){
+var sensorTrigger = schedule.scheduleJob('*/10 * * * * *',function(){
 	getLevel();
 	console.log("Sense");
 });
@@ -62,7 +62,7 @@ function saveSettings(content){
 		console.log("Saved new settings.");
 	});
 }
-*/
+
 app.use('/scripts/bootstrap/', express.static(__dirname + '/node_modules/bootstrap/dist/js/'));
 app.use('/scripts/popper.js/', express.static(__dirname + '/node_modules/popper.js/dist/umd/'));
 app.use('/scripts/jquery/', express.static(__dirname + '/node_modules/jquery/dist/'));
@@ -71,7 +71,7 @@ app.use('/styles/bootstrap/', express.static(__dirname + '/node_modules/bootstra
 app.get('/',function(req,res){
 	res.sendFile(path.join(__dirname+ '/static/dashboard.html'));
 });
-/*
+
 app.get('/gettank',function(req,res){
 	var tank = {
 		'type':settings.tankType,
@@ -153,5 +153,4 @@ app.get('/setmotor',function(req,res){
 if(settings.mode=="auto"){
 	setAutomode();
 }
-*/
 app.listen(port);
