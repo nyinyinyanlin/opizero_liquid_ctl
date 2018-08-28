@@ -84,7 +84,8 @@
   <script src="/scripts/bootstrap/bootstrap.min.js"></script>
   <script>
   $(document).ready(function(){
-    $("autoBtn").click(function(){
+    $("autoBtn").on('click',function(){
+      console.log("Auto");
       $.ajax({
         type: "GET",
         dataType: "json",
@@ -96,6 +97,7 @@
       });
     });
     $("manualBtn").click(function(){
+      console.log("Manual");
       $.ajax({
         type: "GET",
         dataType: "json",
@@ -107,6 +109,7 @@
       });
     });
     $("runBtn").click(function(){
+      console.log("Run");
       $.ajax({
         type: "GET",
         dataType: "json",
@@ -118,6 +121,7 @@
       });
     });
     $("stopBtn").click(function(){
+      console.log("Stop");
       $.ajax({
         type: "GET",
         dataType: "json",
@@ -129,6 +133,7 @@
       });
     });
     $("saveBtn").click(function(){
+      console.log("Save");
       var str = "";
       if($("#tankTypeInput").val()=="cylindrical"){
         str = str.concat("type=cylindrical");
