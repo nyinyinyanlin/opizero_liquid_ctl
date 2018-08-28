@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="/styles/bootstrap/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="/styles/bootstrap/bootstrap.min.css"></link>
   <style>
     .setting {
       border-style: solid;
@@ -84,7 +84,7 @@
   <script src="/scripts/bootstrap/bootstrap.min.js"></script>
   <script>
   $(document).ready(function(){
-    $("autoBtn").on('click',function(){
+    $("#autoBtn").on('click',function(){
       console.log("Auto");
       $.ajax({
         type: "GET",
@@ -96,7 +96,7 @@
         }
       });
     });
-    $("manualBtn").click(function(){
+    $("#manualBtn").click(function(){
       console.log("Manual");
       $.ajax({
         type: "GET",
@@ -108,7 +108,7 @@
         }
       });
     });
-    $("runBtn").click(function(){
+    $("#runBtn").click(function(){
       console.log("Run");
       $.ajax({
         type: "GET",
@@ -120,7 +120,7 @@
         }
       });
     });
-    $("stopBtn").click(function(){
+    $("#stopBtn").click(function(){
       console.log("Stop");
       $.ajax({
         type: "GET",
@@ -132,7 +132,7 @@
         }
       });
     });
-    $("saveBtn").click(function(){
+    $("#saveBtn").click(function(){
       console.log("Save");
       var str = "";
       if($("#tankTypeInput").val()=="cylindrical"){
