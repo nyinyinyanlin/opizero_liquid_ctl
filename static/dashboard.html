@@ -39,11 +39,21 @@
               </div>
             </div>
             <div class="form-group">
-              <label for="limit">Limit</label>
-              <input type="number" class="form-control" id="limit" placeholder="Unit: mm" id="limitInput">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" for="inputGroupSelect01">Limit</label>
+                </div>
+                <input type="number" class="form-control" placeholder="Unit: mm" aria-describedby="limitBtn">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" type="button" id="limitBtn">Save</button>
+                </div>
+              </div>
             </div>
             <div class="form-group">
               <div class="input-group">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" for="inputGroupSelect01">Offset</label>
+                </div>
                 <input type="number" class="form-control" placeholder="Unit: mm" aria-describedby="offsetBtn">
                 <div class="input-group-append">
                   <button class="btn btn-outline-secondary" type="button" id="offsetBtn">Save</button>
