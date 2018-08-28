@@ -43,7 +43,7 @@
                 <div class="input-group-prepend">
                   <label class="input-group-text" for="inputGroupSelect01">Limit</label>
                 </div>
-                <input type="number" class="form-control" placeholder="Unit: mm" aria-describedby="limitBtn">
+                <input type="number" class="form-control" placeholder="Unit: mm" aria-describedby="limitBtn" id="limitInput">
                 <div class="input-group-append">
                   <button class="btn btn-outline-secondary" type="button" id="limitBtn">Save</button>
                 </div>
@@ -54,7 +54,7 @@
                 <div class="input-group-prepend">
                   <label class="input-group-text" for="inputGroupSelect01">Offset</label>
                 </div>
-                <input type="number" class="form-control" placeholder="Unit: mm" aria-describedby="offsetBtn">
+                <input type="number" class="form-control" placeholder="Unit: mm" aria-describedby="offsetBtn" id="offsetInput">
                 <div class="input-group-append">
                   <button class="btn btn-outline-secondary" type="button" id="offsetBtn">Save</button>
                 </div>
@@ -140,6 +140,30 @@
         type: "GET",
         dataType: "json",
         url: "http://192.168.8.103:8000/setmotor?set=off",
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+          console.log(data);
+        }
+      });
+    });
+    $("#limitBtn").click(function(){
+      console.log("Limit");
+      $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: ("http://192.168.8.103:8000/setlevel?level=").concat(String($("#limitInput").val())),
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+          console.log(data);
+        }
+      });
+    });
+    $("#offsetBtn").click(function(){
+      console.log("Offset");
+      $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: ("http://192.168.8.103:8000/setoffset?offset=").concat(String($("#offsetInput").val())),
         contentType: "application/json; charset=utf-8",
         success: function (data) {
           console.log(data);
