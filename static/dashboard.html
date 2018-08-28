@@ -30,21 +30,21 @@
             </div>
             <div class="form-group">
               <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-outline-info">Auto</button>
-                <button type="button" class="btn btn-outline-info">Manual</button>
+                <button type="button" class="btn btn-outline-info" id="autoBtn">Auto</button>
+                <button type="button" class="btn btn-outline-info" id="manualBtn">Manual</button>
               </div>
               <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-outline-success">Run</button>
-                <button type="button" class="btn btn-outline-danger">Stop</button>
+                <button type="button" class="btn btn-outline-success" id="runBtn">Run</button>
+                <button type="button" class="btn btn-outline-danger" id="stopBtn">Stop</button>
               </div>
             </div>
             <div class="form-group">
               <label for="limit">Limit</label>
-              <input type="number" class="form-control" id="limit" placeholder="Unit: mm">
+              <input type="number" class="form-control" id="limit" placeholder="Unit: mm" id="limitInput">
             </div>
             <div class="form-group">
               <label for="offset">Offset</label>
-              <input type="number" class="form-control" id="offset" placeholder="Unit: mm">
+              <input type="number" class="form-control" id="offset" placeholder="Unit: mm" id="offsetInput">
             </div>
           </form>
         </div>
@@ -52,28 +52,28 @@
           <form class="setting">
             <div class="form-group">
               <label for="tankType">Tank Type</label>
-              <select id="tankType" class="form-control">
+              <select id="tankType" class="form-control" id="tankTypeInput">
                 <option>Box</option>
                 <option>Cylindrical</option>
               </select>
             </div>
             <div class="form-group">
-              <label for="tankHeight">Tank Height</label>
-              <input type="number" class="form-control" id="tankHeight" placeholder="Unit: mm">
+              <label for="tankHeightInput">Tank Height</label>
+              <input type="number" class="form-control" id="tankHeightInput" placeholder="Unit: mm">
             </div>
             <div class="form-group">
-              <label for="tankWidth">Tank Width</label>
-              <input type="number" class="form-control" id="tankWidth" placeholder="Unit: mm">
+              <label for="tankWidthInput">Tank Width</label>
+              <input type="number" class="form-control" id="tankWidthInput" placeholder="Unit: mm">
             </div>
             <div class="form-group">
-              <label for="tankLength">Tank Length</label>
-              <input type="number" class="form-control" id="tankLength" placeholder="Unit: mm">
+              <label for="tankLengthInput">Tank Length</label>
+              <input type="number" class="form-control" id="tankLengthInput" placeholder="Unit: mm">
             </div>
             <div class="form-group">
-              <label for="tankRadius">Tank Radius</label>
-              <input type="number" class="form-control" id="tankRadius" placeholder="Unit: mm">
+              <label for="tankRadiusInput">Tank Radius</label>
+              <input type="number" class="form-control" id="tankRadiusInput" placeholder="Unit: mm">
             </div>
-            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="submit" class="btn btn-primarys" id="saveBtn">Save</button>
           </form>
         </div>
       </div>
@@ -82,5 +82,78 @@
   <script src="/scripts/jquery/jquery.min.js"></script>
   <script src="/scripts/popper.js/popper.min.js"></script>
   <script src="/scripts/bootstrap/bootstrap.min.js"></script>
+  <script>
+  $(document).ready(function(){
+    $("autoBtn").click(function(){
+      $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: "https://localhost:8000/setmode?mode=auto",
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+          console.log(data);
+        }
+      });
+    });
+    $("manualBtn").click(function(){
+      $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: "https://localhost:8000/setmode?mode=manual",
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+          console.log(data);
+        }
+      });
+    });
+    $("runBtn").click(function(){
+      $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: "https://localhost:8000/setmotor?set=on",
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+          console.log(data);
+        }
+      });
+    });
+    $("stopBtn").click(function(){
+      $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: "https://localhost:8000/setmotor?set=off",
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+          console.log(data);
+        }
+      });
+    });
+    $("saveBtn").click(function(){
+      var str = "";
+      if($("#tankTypeInput").val()=="cylindrical"){
+        str = str.concat("type=cylindrical");
+        str = str.concat("&radius=");
+        str = str.concat(String($("#tankRadiusInput").val()));
+      }else{
+        str = str.concat("type=box");
+        str = str.concat("&width=");
+        str = str.concat(String($("#tankWidthInput").val()));
+        str = str.concat("&length=");
+        str = str.concat(String($("#tankLengthInput").val()));
+      }
+      str = str.concat("&height=");
+      str = str.concat(String($("#tankHeightInput").val()));
+      $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: "https://localhost:8000/settank?",
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+          console.log(data);
+        }
+      });
+    });
+  });
+  </script>
 </body>
 </html>
