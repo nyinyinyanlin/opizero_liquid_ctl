@@ -98,6 +98,30 @@
   <script src="/scripts/bootstrap/bootstrap.min.js"></script>
   <script>
   $(document).ready(function(){
+    function update(){
+      $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: "http://192.168.8.103:8000/gettank",
+        contentType: "application/json; charset=utf-8",
+        success: function(data){
+          console.log(data);
+          $("#tankHeightInput").val(data.height);
+          $("#limitInput").val(data.threshold);
+          $("#offsetInput").val(data.offset);
+          if(data.type=="cylindrical"){
+            $("#tankRadiusInput").val(data.radius);
+            $("#tankWidthInput").val("");
+            $("#tankLengthInput").val("");
+          }else{
+            $("#tankWidthInput").val(data.width);
+            $("#tankLengthInput").val(data.length);
+            $("#tankRadiusInput").val("");
+          }
+        }
+      });
+      setTimeout(update,5000);
+    }
     $("#autoBtn").on('click',function(){
       console.log("Auto");
       $.ajax({
@@ -196,6 +220,7 @@
         }
       });
     });
+    update();
   });
   </script>
 </body>
