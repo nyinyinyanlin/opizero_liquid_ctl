@@ -88,7 +88,7 @@
       $.ajax({
         type: "GET",
         dataType: "json",
-        url: "/setmode?mode=auto",
+        url: "http://192.168.8.103:8000/setmode?mode=auto",
         contentType: "application/json; charset=utf-8",
         success: function (data) {
           console.log(data);
@@ -99,7 +99,7 @@
       $.ajax({
         type: "GET",
         dataType: "json",
-        url: "/setmode?mode=manual",
+        url: "http://192.168.8.103:8000/setmode?mode=manual",
         contentType: "application/json; charset=utf-8",
         success: function (data) {
           console.log(data);
@@ -110,7 +110,7 @@
       $.ajax({
         type: "GET",
         dataType: "json",
-        url: "/setmotor?set=on",
+        url: "http://192.168.8.103:8000/setmotor?set=on",
         contentType: "application/json; charset=utf-8",
         success: function (data) {
           console.log(data);
@@ -121,7 +121,7 @@
       $.ajax({
         type: "GET",
         dataType: "json",
-        url: "/setmotor?set=off",
+        url: "http://192.168.8.103:8000/setmotor?set=off",
         contentType: "application/json; charset=utf-8",
         success: function (data) {
           console.log(data);
@@ -146,7 +146,7 @@
       $.ajax({
         type: "GET",
         dataType: "json",
-        url: "/settank?",
+        url: "http://192.168.8.103:8000/settank?",
         contentType: "application/json; charset=utf-8",
         success: function (data) {
           console.log(data);
