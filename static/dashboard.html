@@ -122,13 +122,13 @@
           if(data.mode=="auto"){
             $("#autoBtn").addClass("active");
             $("#manualBtn").removeClass("active");
-            $("#runBtn").addAttr("disabled");
-            $("#stopBtn").addAttr("disabled");
+            $("#runBtn").prop("disabled",true);
+            $("#stopBtn").prop("disabled",true);
           }else{
             $("#autoBtn").removeClass("active");
             $("#manualBtn").addClass("active");
-            $("#runBtn").removeAttr("disabled");
-            $("#stopBtn").removeAttr("disabled");
+            $("#runBtn").prop("disabled",false);
+            $("#stopBtn").prop("disabled",false);
           }
           if(data.type=="cylindrical"){
             $("#tankRadiusInput").val(data.radius);
