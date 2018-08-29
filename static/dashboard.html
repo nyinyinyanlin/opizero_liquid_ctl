@@ -101,6 +101,20 @@
   <script src="/scripts/bootstrap/bootstrap.min.js"></script>
   <script>
   $(document).ready(function(){
+    function progress_update(data){
+      $('#progressbar').attr('aria-valuenow', ((data.level/data.height)*100)).css('width',String(((data.level/data.height)*100)).concat("%"));
+    }
+    setInterval(function(){
+      $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: "http://192.168.8.102:8000/gettank",
+        contentType: "application/json; charset=utf-8",
+        success: function(data){
+          progress_update(data);
+        }
+      });
+    },1000);
     function update(){
       $.ajax({
         type: "GET",
@@ -108,7 +122,7 @@
         url: "http://192.168.8.102:8000/gettank",
         contentType: "application/json; charset=utf-8",
         success: function(data){
-          $('#progressbar').attr('aria-valuenow', ((data.level/data.height)*100)).css('width',String(((data.level/data.height)*100)).concat("%"));
+          progress_update(data);
           $("#tankHeightInput").val(data.height);
           $("#limitInput").val(data.threshold);
           $("#offsetInput").val(data.offset);
