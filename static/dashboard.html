@@ -122,13 +122,13 @@
           if(data.mode=="auto"){
             $("#autoBtn").addClass("active");
             $("#manualBtn").removeClass("active");
-            $("#runBtn").addAttribute("disabled");
-            $("#stopBtn").addAtribute("disabled");
+            $("#runBtn").addAttr("disabled");
+            $("#stopBtn").addAttr("disabled");
           }else{
             $("#autoBtn").removeClass("active");
             $("#manualBtn").addClass("active");
-            $("#runBtn").removeAttribute("disabled");
-            $("#stopBtn").removeAtribute("disabled");
+            $("#runBtn").removeAttr("disabled");
+            $("#stopBtn").removeAttr("disabled");
           }
           if(data.type=="cylindrical"){
             $("#tankRadiusInput").val(data.radius);
@@ -146,79 +146,72 @@
       update();
     });
     $("#autoBtn").on('click',function(){
-      console.log("Auto");
       $.ajax({
         type: "GET",
         dataType: "json",
         url: "http://192.168.8.102:8000/setmode?mode=auto",
         contentType: "application/json; charset=utf-8",
         success: function (data) {
-          console.log(data);
+          update();
         }
       });
     });
     $("#manualBtn").click(function(){
-      console.log("Manual");
       $.ajax({
         type: "GET",
         dataType: "json",
         url: "http://192.168.8.102:8000/setmode?mode=manual",
         contentType: "application/json; charset=utf-8",
         success: function (data) {
-          console.log(data);
+          update();
         }
       });
     });
     $("#runBtn").click(function(){
-      console.log("Run");
       $.ajax({
         type: "GET",
         dataType: "json",
         url: "http://192.168.8.102:8000/setmotor?set=on",
         contentType: "application/json; charset=utf-8",
         success: function (data) {
-          console.log(data);
+          update();
         }
       });
     });
     $("#stopBtn").click(function(){
-      console.log("Stop");
       $.ajax({
         type: "GET",
         dataType: "json",
         url: "http://192.168.8.102:8000/setmotor?set=off",
         contentType: "application/json; charset=utf-8",
         success: function (data) {
-          console.log(data);
+          update();
         }
       });
     });
     $("#limitBtn").click(function(){
-      console.log("Limit");
       $.ajax({
         type: "GET",
         dataType: "json",
         url: ("http://192.168.8.102:8000/setlevel?level=").concat(String($("#limitInput").val())),
         contentType: "application/json; charset=utf-8",
         success: function (data) {
-          console.log(data);
+          update();
         }
       });
     });
     $("#offsetBtn").click(function(){
-      console.log("Offset");
       $.ajax({
         type: "GET",
         dataType: "json",
         url: ("http://192.168.8.102:8000/setoffset?offset=").concat(String($("#offsetInput").val())),
         contentType: "application/json; charset=utf-8",
         success: function (data) {
-          console.log(data);
+          update();
         }
       });
     });
     $("#saveBtn").click(function(){
-      console.log("Save");
       var str = "";
       if($("#tankTypeInput").val()=="cylindrical"){
         str = str.concat("type=cylindrical");
@@ -239,7 +232,7 @@
         url: ("http://192.168.8.102:8000/settank?").concat(str),
         contentType: "application/json; charset=utf-8",
         success: function (data) {
-          console.log(data);
+          update();
         }
       });
     });
