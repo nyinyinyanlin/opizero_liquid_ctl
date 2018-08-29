@@ -152,9 +152,10 @@
         url: "http://192.168.8.102:8000/setmode?mode=auto",
         contentType: "application/json; charset=utf-8",
         success: function (data) {
-          update();
+
         }
       });
+      update();
     });
     $("#manualBtn").click(function(){
       $.ajax({
@@ -163,9 +164,10 @@
         url: "http://192.168.8.102:8000/setmode?mode=manual",
         contentType: "application/json; charset=utf-8",
         success: function (data) {
-          update();
+
         }
       });
+      update();
     });
     $("#runBtn").click(function(){
       $.ajax({
@@ -174,9 +176,10 @@
         url: "http://192.168.8.102:8000/setmotor?set=on",
         contentType: "application/json; charset=utf-8",
         success: function (data) {
-          update();
+
         }
       });
+      update();
     });
     $("#stopBtn").click(function(){
       $.ajax({
@@ -185,9 +188,10 @@
         url: "http://192.168.8.102:8000/setmotor?set=off",
         contentType: "application/json; charset=utf-8",
         success: function (data) {
-          update();
+
         }
       });
+      update();
     });
     $("#limitBtn").click(function(){
       $.ajax({
@@ -196,9 +200,10 @@
         url: ("http://192.168.8.102:8000/setlevel?level=").concat(String($("#limitInput").val())),
         contentType: "application/json; charset=utf-8",
         success: function (data) {
-          update();
+
         }
       });
+      update();
     });
     $("#offsetBtn").click(function(){
       $.ajax({
@@ -207,9 +212,10 @@
         url: ("http://192.168.8.102:8000/setoffset?offset=").concat(String($("#offsetInput").val())),
         contentType: "application/json; charset=utf-8",
         success: function (data) {
-          update();
+
         }
       });
+      update();
     });
     $("#saveBtn").click(function(){
       var str = "";
@@ -232,9 +238,10 @@
         url: ("http://192.168.8.102:8000/settank?").concat(str),
         contentType: "application/json; charset=utf-8",
         success: function (data) {
-          update();
+
         }
       });
+      update();
     });
     update();
   });
