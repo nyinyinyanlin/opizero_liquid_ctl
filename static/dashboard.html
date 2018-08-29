@@ -102,6 +102,7 @@
   <script src="/scripts/bootstrap/bootstrap.min.js"></script>
   <script>
   $(document).ready(function(){
+    var host = String(location.host);
     function progress_update(data){
       $("#progressbar").html(String(Math.ceil(data.level)).concat(" cm"));
       $('#progressbar').attr('aria-valuenow', ((data.level/data.height)*100)).css('width',String(((data.level/data.height)*100)).concat("%"));
@@ -110,7 +111,7 @@
       $.ajax({
         type: "GET",
         dataType: "json",
-        url: "http://192.168.8.102:8000/gettank",
+        url: "http://"+host+"/gettank",
         contentType: "application/json; charset=utf-8",
         success: function(data){
           progress_update(data);
@@ -121,7 +122,7 @@
       $.ajax({
         type: "GET",
         dataType: "json",
-        url: "http://192.168.8.102:8000/gettank",
+        url: "http://"+host+"/gettank",
         contentType: "application/json; charset=utf-8",
         success: function(data){
           progress_update(data);
@@ -165,7 +166,7 @@
       $.ajax({
         type: "GET",
         dataType: "json",
-        url: "http://192.168.8.102:8000/setmode?mode=auto",
+        url: "http://"+host+"/setmode?mode=auto",
         contentType: "application/json; charset=utf-8",
         success: function (data) {
 
@@ -177,7 +178,7 @@
       $.ajax({
         type: "GET",
         dataType: "json",
-        url: "http://192.168.8.102:8000/setmode?mode=manual",
+        url: "http://"+host+"/setmode?mode=manual",
         contentType: "application/json; charset=utf-8",
         success: function (data) {
 
@@ -189,7 +190,7 @@
       $.ajax({
         type: "GET",
         dataType: "json",
-        url: "http://192.168.8.102:8000/setmotor?set=on",
+        url: "http://"+host+"/setmotor?set=on",
         contentType: "application/json; charset=utf-8",
         success: function (data) {
 
@@ -201,7 +202,7 @@
       $.ajax({
         type: "GET",
         dataType: "json",
-        url: "http://192.168.8.102:8000/setmotor?set=off",
+        url: "http://"+host+"/setmotor?set=off",
         contentType: "application/json; charset=utf-8",
         success: function (data) {
 
@@ -213,7 +214,7 @@
       $.ajax({
         type: "GET",
         dataType: "json",
-        url: ("http://192.168.8.102:8000/setlevel?level=").concat(String($("#limitInput").val())),
+        url: ("http://"+host+"/setlevel?level=").concat(String($("#limitInput").val())),
         contentType: "application/json; charset=utf-8",
         success: function (data) {
 
@@ -225,7 +226,7 @@
       $.ajax({
         type: "GET",
         dataType: "json",
-        url: ("http://192.168.8.102:8000/setoffset?offset=").concat(String($("#offsetInput").val())),
+        url: ("http://"+host+"/setoffset?offset=").concat(String($("#offsetInput").val())),
         contentType: "application/json; charset=utf-8",
         success: function (data) {
 
@@ -251,7 +252,7 @@
       $.ajax({
         type: "GET",
         dataType: "json",
-        url: ("http://192.168.8.102:8000/settank?").concat(str),
+        url: ("http://"+host+"/settank?").concat(str),
         contentType: "application/json; charset=utf-8",
         success: function (data) {
 
