@@ -112,6 +112,24 @@
           $("#tankHeightInput").val(data.height);
           $("#limitInput").val(data.threshold);
           $("#offsetInput").val(data.offset);
+          if(data.motor=="on"){
+            $("#runBtn").addClass("active");
+            $("#stopBtn").removeClass("active");
+          }else{
+            $("#runBtn").removeClass("active");
+            $("#stopBtn").addClass("active");
+          }
+          if(data.mode=="auto"){
+            $("#autoBtn").addClass("active");
+            $("#manualBtn").removeClass("active");
+            $("#runBtn").addAttribute("disabled");
+            $("#stopBtn").addAtribute("disabled");
+          }else{
+            $("#autoBtn").removeClass("active");
+            $("#manualBtn").addClass("active");
+            $("#runBtn").removeAttribute("disabled");
+            $("#stopBtn").removeAtribute("disabled");
+          }
           if(data.type=="cylindrical"){
             $("#tankRadiusInput").val(data.radius);
             $("#tankWidthInput").val("");
