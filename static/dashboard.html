@@ -22,6 +22,7 @@
     <div class="row justify-content-center pt-5 pb-5">
       <div class="col">
         <div class="row justify-content-center">
+          <h3>Liquid Level Control System</h3>
           <form>
             <div class="form-group">
               <div class="progress">
@@ -102,7 +103,7 @@
   <script>
   $(document).ready(function(){
     function progress_update(data){
-      $("#progressbar").html(String(data.level).concat(" cm"));
+      $("#progressbar").html(String(Math.ceil(data.level)).concat(" cm"));
       $('#progressbar').attr('aria-valuenow', ((data.level/data.height)*100)).css('width',String(((data.level/data.height)*100)).concat("%"));
     }
     setInterval(function(){
