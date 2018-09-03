@@ -64,6 +64,17 @@
                 </div>
               </div>
             </div>
+            <div class="form-group">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" for="inputGroupSelect01">Timeout</label>
+                </div>
+                <input type="number" class="form-control" placeholder="Unit: seconds" aria-describedby="timeoutBtn" id="timeoutInput">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" type="button" id="timeoutBtn">Save</button>
+                </div>
+              </div>
+            </div>
           </form>
         </div>
         <div class="row justify-content-center">
@@ -129,6 +140,7 @@
           $("#tankHeightInput").val(data.height);
           $("#limitInput").val(data.threshold);
           $("#offsetInput").val(data.offset);
+          $("#timeoutInput").val(data.timeout);
           if(data.motor=="on"){
             $("#runBtn").addClass("active");
             $("#stopBtn").removeClass("active");
@@ -227,6 +239,18 @@
         type: "GET",
         dataType: "json",
         url: ("http://"+host+"/setoffset?offset=").concat(String($("#offsetInput").val())),
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+
+        }
+      });
+      setTimeout(update,1000);
+    });
+    $("#timeoutBtn").click(function(){
+      $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: ("http://"+host+"/settimeout?timeout=").concat(String($("#timeoutInput").val())),
         contentType: "application/json; charset=utf-8",
         success: function (data) {
 
