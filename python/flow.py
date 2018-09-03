@@ -13,7 +13,7 @@ def main():
     while (gpio.input(port.GPIO17)==cur):
         now = datetime.now()
         delta = now - start
-        if(delta.seconds>=60)
+        if(delta.seconds>=5):
             print("0")
             exit()
     now = datetime.now()
