@@ -13,6 +13,7 @@ const relay_script = process.env.RELAY_CONTROL || "python/relay.py";
 const flow_script = process.env.FLOW_SENSE || "python/flow.py";
 
 var flowing = false;
+var timestamp = null;
 
 var flowSchedule = schedule.scheduleJob('*/5 * * * * *',function(){
 	pyshell.run(flow_script,{},function(err,results){
@@ -38,11 +39,19 @@ function getLevel(){
 
 function setAutomode(){
 	autoSchedule = schedule.scheduleJob('*/5 * * * * *', function(){
-		console.log(flowing);
-		if(settings.setLevel > (curLevel+settings.offset)){
+		if((settings.setLevel > (curLevel+settings.offset))&&(timestamp&&(parseInt((new Date()-timestamp)/1000)>60)){
 			console.log("Motor fill");
 			setMotor("on");
 			runMotor = "on";
+			setTimeout(function(){
+				if(!flowing){
+					timestamp = new Date();
+					setMotor("off");
+					runMotor = "off";
+				}else{
+					timestamp = null;
+				}
+			},10000);
 		}else{
 			console.log("Motor stop");
 			setMotor("off");
