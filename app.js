@@ -14,7 +14,7 @@ const flow_script = process.env.FLOW_SENSE || "python/flow.py";
 
 var flowing = false;
 
-var flowSchedule = schedule.scheduleJob('*/5 * * * * *',function(){
+var flowSchedule = schedule.scheduleJob('*/1 * * * *',function(){
 	pyshell.run(flow_script,{},function(err,results){
 		if(err) throw err;
 		console.log(results);
