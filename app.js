@@ -14,6 +14,7 @@ const flow_script = process.env.FLOW_SENSE || "python/flow.py";
 
 var flowing = false;
 var timestamp = null;
+var timeout = 60;
 
 var flowSchedule = schedule.scheduleJob('*/5 * * * * *',function(){
 	pyshell.run(flow_script,{},function(err,results){
@@ -39,7 +40,7 @@ function getLevel(){
 
 function setAutomode(){
 	autoSchedule = schedule.scheduleJob('*/5 * * * * *', function(){
-		if((settings.setLevel > (curLevel+settings.offset))&&(timestamp&&(parseInt((new Date()-timestamp)/1000)>60)){
+		if((settings.setLevel > (curLevel+settings.offset))&&timestamp&&(parseInt((new Date()-timestamp)/1000)>timeout)){
 			console.log("Motor fill");
 			setMotor("on");
 			runMotor = "on";
