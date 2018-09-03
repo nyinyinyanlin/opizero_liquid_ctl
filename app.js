@@ -38,7 +38,7 @@ function getLevel(){
 
 function setAutomode(){
 	autoSchedule = schedule.scheduleJob('*/5 * * * * *', function(){
-		console.log("Flowing: ",flowing);
+		console.log(flowing);
 		if(settings.setLevel > (curLevel+settings.offset)){
 			console.log("Motor fill");
 			setMotor("on");
