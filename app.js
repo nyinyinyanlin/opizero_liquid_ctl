@@ -40,19 +40,25 @@ function getLevel(){
 
 function setAutomode(){
 	autoSchedule = schedule.scheduleJob('*/5 * * * * *', function(){
-		if((settings.setLevel > (curLevel+settings.offset))&&timestamp&&(parseInt((new Date()-timestamp)/1000)>timeout)){
-			console.log("Motor fill");
-			setMotor("on");
-			runMotor = "on";
-			setTimeout(function(){
-				if(!flowing){
-					timestamp = new Date();
-					setMotor("off");
-					runMotor = "off";
-				}else{
-					timestamp = null;
-				}
-			},10000);
+		if(settings.setLevel > (curLevel+settings.offset)){
+			if(timestamp&&(parseInt((new Date()-timestamp)/1000)>timeout){
+				timestamp = null;
+				console.log("timestamp null");
+			}
+			if(timestamp==null){
+				console.log("Motor fill");
+				setMotor("on");
+				runMotor = "on";
+				setTimeout(function(){
+					if(!flowing){
+						timestamp = new Date();
+						setMotor("off");
+						runMotor = "off";
+					}else{
+						timestamp = null;
+					}
+				},5000);
+			}
 		}else{
 			console.log("Motor stop");
 			setMotor("off");
