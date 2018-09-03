@@ -14,7 +14,7 @@ const flow_script = process.env.FLOW_SENSE || "python/flow.py";
 
 var flowing = false;
 var timestamp = null;
-var timeout = 60;
+var timeout = 10;
 
 var flowSchedule = schedule.scheduleJob('*/5 * * * * *',function(){
 	pyshell.run(flow_script,{},function(err,results){
@@ -31,7 +31,9 @@ var flowSchedule = schedule.scheduleJob('*/5 * * * * *',function(){
 function getLevel(){
 	pyshell.run(sense_script,{},function(err,results){
 		if(err) throw err;
+		console.log(results[0]);
 		curLevel = (settings.tankHeight - parseFloat(results[0]))||settings.setLevel;
+		console.log(curLevel);
 		if (curLevel < 0){
 			curLevel = 0;
 		}
@@ -41,7 +43,7 @@ function getLevel(){
 function setAutomode(){
 	autoSchedule = schedule.scheduleJob('*/5 * * * * *', function(){
 		if(settings.setLevel > (curLevel+settings.offset)){
-			if(timestamp&&(parseInt((new Date()-timestamp)/1000)>timeout){
+			if(timestamp&&(parseInt((new Date()-timestamp)/1000)>timeout)){
 				timestamp = null;
 				console.log("timestamp null");
 			}

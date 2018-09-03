@@ -1,11 +1,11 @@
 {
-  "tankType": "cylindrical",
+  "tankType": "box",
   "tankRadius": 50.5,
-  "tankHeight": 10.5,
-  "tankWidth": 0,
-  "tankLength": 0,
+  "tankHeight": 200,
+  "tankWidth": 50,
+  "tankLength": 50,
   "setLevel": 6,
   "curLevel": 0,
   "offset": 0.5,
-  "mode": "auto"
+  "mode": "manual"
 }
