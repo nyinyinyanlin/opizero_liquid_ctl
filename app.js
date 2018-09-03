@@ -14,7 +14,6 @@ const flow_script = process.env.FLOW_SENSE || "python/flow.py";
 
 var flowing = false;
 var timestamp = null;
-var timeout = 10;
 
 var flowSchedule = schedule.scheduleJob('*/5 * * * * *',function(){
 	pyshell.run(flow_script,{},function(err,results){
@@ -43,7 +42,7 @@ function getLevel(){
 function setAutomode(){
 	autoSchedule = schedule.scheduleJob('*/5 * * * * *', function(){
 		if(settings.setLevel > (curLevel+settings.offset)){
-			if(timestamp&&(parseInt((new Date()-timestamp)/1000)>timeout)){
+			if(timestamp&&(parseInt((new Date()-timestamp)/1000)>settings.timeout)){
 				timestamp = null;
 				console.log("timestamp null");
 			}
@@ -113,6 +112,7 @@ app.get('/gettank',function(req,res){
 		'level':curLevel,
 		'threshold' : settings.setLevel,
 		'offset':settings.offset,
+		'timeout': settings.timeout,
 		'mode':settings.mode,
 		'motor':runMotor,
 	}
@@ -133,6 +133,12 @@ app.get('/setlevel',function(req,res){
 
 app.get('/setoffset',function(req,res){
 	settings.offset = parseFloat(req.param('offset')) || 0;
+	saveSettings(settings);
+	res.send(200);
+});
+
+app.get('/settimeout',function(req,res){
+	settings.timeout = parseFloat(req.param('timeout')) || 60;
 	saveSettings(settings);
 	res.send(200);
 });
