@@ -11,7 +11,21 @@ const filename = process.env.SETTINGS || "setting.json";
 const sense_script = process.env.SENSE || "python/hcsr04.py";
 const relay_script = process.env.RELAY_CONTROL || "python/relay.py";
 const flow_script = process.env.FLOW_SENSE || "python/flow.py";
-const motor_timeout =
+
+var flowing = false;
+
+var flowSchedule = schedule.scheduleJob('*/5 * * * * *',function(){
+	pyshell.run(flow_script,{},function(err,results){
+		if(err) throw err;
+		console.log(results);
+		if(parseInt(results[0])){
+			flowing = true;
+		}else{
+			flowing = false;
+		}
+	});
+});
+
 function getLevel(){
 	pyshell.run(sense_script,{},function(err,results){
 		if(err) throw err;
@@ -24,23 +38,11 @@ function getLevel(){
 
 function setAutomode(){
 	autoSchedule = schedule.scheduleJob('*/5 * * * * *', function(){
+		console.log("Flowing: ",flowing);
 		if(settings.setLevel > (curLevel+settings.offset)){
 			console.log("Motor fill");
 			setMotor("on");
 			runMotor = "on";
-			setTimeout(4000,function(){
-				pyshell.run(flow_script,{},function(err,results){
-					if(parseInt(results[0])){
-						console.log("Motor Fill");
-						setMotor("on");
-						runMotor = "on";
-					}else{
-						console.log("Motor Stop");
-						setMotor("off");
-						runMotor = "off";
-					}
-				});
-			});
 		}else{
 			console.log("Motor stop");
 			setMotor("off");
