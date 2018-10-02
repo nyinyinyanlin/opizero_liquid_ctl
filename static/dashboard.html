@@ -149,6 +149,7 @@
         success: function(data){
           progress_update(data);
           $("#tankHeightInput").val(data.height);
+	  $("#fillInput").val(data.filllevel);
           $("#limitInput").val(data.threshold);
           $("#offsetInput").val(data.offset);
           $("#timeoutInput").val(data.timeout);
@@ -238,6 +239,18 @@
         type: "GET",
         dataType: "json",
         url: ("http://"+host+"/setlevel?level=").concat(String($("#limitInput").val())),
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+
+        }
+      });
+      setTimeout(update,1000);
+    });
+    $("#fillBtn").click(function(){
+      $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: ("http://"+host+"/setstoplevel?stoplevel=").concat(String($("#fillInput").val())),
         contentType: "application/json; charset=utf-8",
         success: function (data) {
 

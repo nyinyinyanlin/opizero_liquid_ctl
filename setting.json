@@ -4,10 +4,10 @@
   "tankHeight": 19,
   "tankWidth": 15,
   "tankLength": 15,
-  "setLevel": 7,
-  "setStopLevel":0,
+  "setLevel": 2,
+  "setStopLevel": 9,
   "curLevel": 0,
   "offset": 0,
   "mode": "auto",
-  "timeout": 1
+  "timeout": 3
 }
