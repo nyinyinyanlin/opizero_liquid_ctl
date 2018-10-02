@@ -5,6 +5,7 @@
   "tankWidth": 15,
   "tankLength": 15,
   "setLevel": 7,
+  "setStopLevel":0,
   "curLevel": 0,
   "offset": 0,
   "mode": "auto",

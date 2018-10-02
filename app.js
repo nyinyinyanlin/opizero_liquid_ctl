@@ -12,9 +12,6 @@ const sense_script = process.env.SENSE || "python/hcsr04.py";
 const relay_script = process.env.RELAY_CONTROL || "python/relay.py";
 const flow_script = process.env.FLOW_SENSE || "python/flow.py";
 
-var flowing = false;
-var timestamp = null;
-
 var flowSchedule = schedule.scheduleJob('*/5 * * * * *',function(){
 	pyshell.run(flow_script,{},function(err,results){
 		if(err) throw err;
@@ -41,7 +38,10 @@ function getLevel(){
 
 function setAutomode(){
 	autoSchedule = schedule.scheduleJob('*/5 * * * * *', function(){
-		if(settings.setLevel > (curLevel+settings.offset)){
+		if((settings.setLevel > (curLevel+settings.offset))&&(settings.setStopLevel > (curLevel+settings.offset))&&(runFlag==false)){
+			runFlag = true;
+		}
+		if(runFlag&&(settings.setStopLevel > (curLevel+settings.offset))){
 			if(timestamp&&(parseInt((new Date()-timestamp)/1000)>settings.timeout)){
 				timestamp = null;
 				console.log("timestamp null");
@@ -86,6 +86,9 @@ var settings = JSON.parse(setting);
 var curLevel = 0;
 var runMotor = "off";
 var autoSchedule = null;
+var flowing = false;
+var timestamp = null;
+var runFlag = false;
 console.log("Loading completed.");
 
 function saveSettings(content){
@@ -111,6 +114,7 @@ app.get('/gettank',function(req,res){
 		'height':settings.tankHeight,
 		'level':curLevel,
 		'threshold' : settings.setLevel,
+		'filllevel':settings.setStopLevel,
 		'offset':settings.offset,
 		'timeout': settings.timeout,
 		'mode':settings.mode,
@@ -127,6 +131,12 @@ app.get('/gettank',function(req,res){
 
 app.get('/setlevel',function(req,res){
 	settings.setLevel = parseFloat(req.param('level')) || 0;
+	saveSettings(settings);
+	res.send(200);
+});
+
+app.get('/setstoplevel',function(req,res){
+	settings.setStopLevel = parseFloat(req.param('stoplevel')) || 0;
 	saveSettings(settings);
 	res.send(200);
 });
@@ -164,6 +174,7 @@ app.get('/setmode',function(req,res){
 		setMotor(runMotor);
 		console.log("Mode Manual - ",runMotor);
 		if(autoSchedule){
+			runFlag = false;
 			autoSchedule.cancel();
 			autoSchedule = null;
 			console.log("Process Terminated");
