@@ -1,11 +1,12 @@
 {
   "tankType": "box",
   "tankRadius": 50.5,
-  "tankHeight": 200,
-  "tankWidth": 50,
-  "tankLength": 50,
-  "setLevel": 6,
+  "tankHeight": 19,
+  "tankWidth": 15,
+  "tankLength": 15,
+  "setLevel": 7,
   "curLevel": 0,
-  "offset": 0.5,
-  "mode": "manual"
+  "offset": 0,
+  "mode": "auto",
+  "timeout": 1
 }
